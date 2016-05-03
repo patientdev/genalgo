@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/patientdev/genalgo.svg?branch=master)](https://travis-ci.org/patientdev/genalgo)
+
 # Genetic algorithm practice
 
 Derived from AI Junkie's [Genetics Algorithms in Plain English](http://www.ai-junkie.com/ga/intro/gat1.html).
