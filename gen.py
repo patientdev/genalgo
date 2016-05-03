@@ -11,17 +11,19 @@ def main():
 
         population = genetics.Population()
 
+        next_population = []
+
         for phenome in population.phenomes:
             phenome.fitness = evolution.assignFitness(phenome, desiderata)
             if phenome.expression == desiderata:
+                if not isinstance(phenome.genome.normalized_rna[-1], int):
+                    del phenome.genome.normalized_rna[-1]
                 print '{} = 0 {}'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
                 print 'Found in {} generations'.format(generations)
                 match_found = True
                 break
             else:
                 generations += 1
-
-                next_population = []
 
                 while len(next_population) < len(population.phenomes):
                     offspring_1 = evolution.roulette(population.phenomes)
