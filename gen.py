@@ -19,7 +19,7 @@ def main():
                 if not isinstance(phenome.genome.normalized_rna[-1], int):
                     del phenome.genome.normalized_rna[-1]
                 print '{} = 0 {}'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
-                print 'Found in {} generations'.format(generations)
+                print 'Found in {:,} generations'.format(generations)
                 match_found = True
                 break
             else:
