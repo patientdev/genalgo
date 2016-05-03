@@ -1,5 +1,6 @@
 import genetics
 import evolution
+import time
 
 def main():
     desiderata = int(raw_input('What number should we try for?: '))
@@ -7,6 +8,7 @@ def main():
     match_found = False
     generations = 0
 
+    start = time.time()
     while not match_found:
 
         population = genetics.Population()
@@ -19,7 +21,7 @@ def main():
                 if not isinstance(phenome.genome.normalized_rna[-1], int):
                     del phenome.genome.normalized_rna[-1]
                 print '{} = 0 {}'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
-                print 'Found in {:,} generations'.format(generations)
+                print 'Found in {:,} generations in {} seconds'.format(generations, round(time.time() - start, 2))
                 match_found = True
                 break
             else:
