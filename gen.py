@@ -1,5 +1,7 @@
 import genetics
 import evolution
+from db_results import ResultsDatabase
+
 import time
 
 def main():
@@ -18,11 +20,21 @@ def main():
         for phenome in population.phenomes:
             phenome.fitness = evolution.assignFitness(phenome, desiderata)
             if phenome.expression == desiderata:
-                if not isinstance(phenome.genome.normalized_rna[-1], int):
-                    del phenome.genome.normalized_rna[-1]
                 print '{} = 0 {}'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
-                print 'Found in {:,} generations in {} seconds'.format(generations, round(time.time() - start, 2))
+
+                duration = round(time.time() - start, 2)
+                print 'Found in {:,} generations in {} seconds'.format(generations, duration)
                 match_found = True
+
+                results_db = ResultsDatabase()
+                results = {
+                    'given_number': desiderata,
+                    'duration': duration,
+                    'successful_sequence': phenome.genome.sequence,
+                    'generations': generations
+                }
+                results_db.insert_results(results=results)
+
                 break
             else:
                 generations += 1
