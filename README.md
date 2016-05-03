@@ -12,6 +12,7 @@ Derived from AI Junkie's [Genetics Algorithms in Plain English](http://www.ai-ju
 * More customization (rates, genome length, etc.)
 * Reload whole population, not just phenomes, for each generation
 * Mutation
+* Unit testing
 
 ## Would like:
 * Track genealogies of successful genomes
