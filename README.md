@@ -10,5 +10,8 @@ Derived from AI Junkie's [Genetics Algorithms in Plain English](http://www.ai-ju
 ## To run:
 `python gen.py`
 
+## Testing
+`python -m unittest discover`
+
 ## Contributing
 Please see the [Issues](https://github.com/patientdev/genalgo/issues) for needed/wanted changes
