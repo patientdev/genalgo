@@ -25,9 +25,7 @@ def roulette(phenomes):
 
 def crossover(offspring_1, offspring_2):
 
-    CROSSOVER_RATE = 0.7
-
-    if random.random() < CROSSOVER_RATE:
+    if random.random() < settings.CROSSOVER_RATE:
         random_crossover_point = int(random.random() * len(offspring_1.genome.sequence))
 
         t1 = offspring_1.genome.sequence[0:random_crossover_point] + offspring_2.genome.sequence[random_crossover_point:len(offspring_2.genome.sequence)]

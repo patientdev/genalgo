@@ -1,35 +1,15 @@
 from random import randint, choice as randomchoice
+import settings
 
 
 class Population(object):
 
-    POPULATION_SIZE = 100
-
     def __init__(self):
-        self.genomes = [Genome() for genome in range(Population.POPULATION_SIZE)]
+        self.genomes = [Genome() for genome in range(settings.POPULATION_SIZE)]
         self.phenomes = [Phenome(genome=genome) for genome in self.genomes]
 
 
 class Genome(object):
-
-    GENOME_LENGTH = 20
-
-    GENES = {
-        '0000': 0,
-        '0001': 1,
-        '0010': 2,
-        '0011': 3,
-        '0100': 4,
-        '0101': 5,
-        '0110': 6,
-        '0111': 7,
-        '1000': 8,
-        '1001': 9,
-        '1010': '+',
-        '1011': '-',
-        '1100': '*',
-        '1101': '/'
-    }
 
     def __init__(self):
         self.genes = self.seedGenome()
@@ -40,13 +20,13 @@ class Genome(object):
 
     def seedGenome(self, genes={}):
         '''Returns a genome as an (inherently) ordered list of genes of length given by static GENOME_LENGTH variable'''
-        genome = [randomchoice(Genome.GENES.keys()) for x in range(Genome.GENOME_LENGTH)]
+        genome = [randomchoice(settings.GENES.keys()) for x in range(settings.GENOME_LENGTH)]
 
         return genome
 
     def translateCodon(self, codon=''):
 
-        gene = Genome.GENES[codon]
+        gene = settings.GENES[codon]
 
         return gene
 

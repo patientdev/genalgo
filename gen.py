@@ -1,8 +1,10 @@
 import genetics
 import evolution
+import settings
 from db_results import ResultsDatabase
 
 import time
+
 
 def main():
     desiderata = int(raw_input('What number should we try for?: '))
