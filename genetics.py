@@ -4,19 +4,24 @@ import settings
 
 class Population(object):
 
-    def __init__(self):
-        self.genomes = [Genome() for genome in range(settings.POPULATION_SIZE)]
-        self.phenomes = [Phenome(genome=genome) for genome in self.genomes]
+    def __init__(self, genomes=[]):
+        if not genomes:
+            self.genomes = [Genome() for genome in range(settings.POPULATION_SIZE)]
+        else:
+            self.genomes = genomes
 
 
 class Genome(object):
 
-    def __init__(self):
-        self.genes = self.seedGenome()
+    def __init__(self, genes=[]):
+        if not genes:
+            self.genes = self.seedGenome()
+        else:
+            self.genes = genes
         self.sequence = ''.join(self.genes)
         self.mRNA = map(self.translateCodon, self.genes)
         self.normalized_rna = self.editRNA()
-        self.fitness = 0.0
+        self.phenome = Phenome(genome=self)
 
     def seedGenome(self, genes={}):
         '''Returns a genome as an (inherently) ordered list of genes of length given by static GENOME_LENGTH variable'''
@@ -26,9 +31,11 @@ class Genome(object):
 
     def translateCodon(self, codon=''):
 
-        gene = settings.GENES[codon]
-
-        return gene
+        try:
+            gene = settings.GENES[codon]
+            return gene
+        except KeyError:
+            del codon
 
     def editRNA(self, mRNA=[]):
         '''
@@ -82,37 +89,37 @@ class Genome(object):
 
 class Phenome(object):
 
-    def __init__(self, genome=Genome()):
+    def __init__(self, genome={}):
         self.genome = genome
-        self.expression = self.expressGenome()
+        self.expression = self.expressGenome(normalized_rna=self.genome.normalized_rna)
         self.fitness = 0.0
 
-    def expressGenome(self):
+    def expressGenome(self, normalized_rna=[]):
         expression = 0.0
 
-        for index, trait in enumerate(self.genome.normalized_rna):
+        for index, trait in enumerate(normalized_rna):
 
             if trait == '+':
                 try:
-                    expression += self.genome.normalized_rna[index + 1]
+                    expression += normalized_rna[index + 1]
                 except:
                     pass
 
             if trait == '-':
                 try:
-                    expression -= self.genome.normalized_rna[index + 1]
+                    expression -= normalized_rna[index + 1]
                 except:
                     pass
 
             if trait == '*':
                 try:
-                    expression *= self.normalized_rna[index + 1]
+                    expression *= normalized_rna[index + 1]
                 except:
                     pass
 
-            if trait == '\/':
+            if trait == '/':
                 try:
-                    expression /= self.normalized_rna[index + 1]
+                    expression /= normalized_rna[index + 1]
                 except:
                     pass
 

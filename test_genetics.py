@@ -19,9 +19,6 @@ class PopulationTests(unittest.TestCase):
     def test_population_genomes(self):
         self.assertEqual(settings.POPULATION_SIZE, len(self.population.genomes))
 
-    def test_population_phenomes(self):
-        self.assertEqual(settings.POPULATION_SIZE, len(self.population.phenomes))
-
 
 class GenomeTests(unittest.TestCase):
 
@@ -53,7 +50,9 @@ class GenomeTests(unittest.TestCase):
         all_integers = [x for x in range(settings.GENOME_LENGTH)]
         all_operators = [random.choice(['/', '*', '+', '-']) for x in range(settings.GENOME_LENGTH)]
 
-        self.assertEqual(self.genome.formatSequenceOrder(all_operators), self.genome.formatSequenceOrder(all_integers))
+        # Assert that both lists, one of nothing but integers and the other nothing but operators, will be empty and therefore equal (an empty list plus an empty list is...an empty list)
+
+        self.assertEqual([], self.genome.formatSequenceOrder(all_operators) + self.genome.formatSequenceOrder(all_integers))
 
 
 if __name__ == '__main__':
