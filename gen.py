@@ -2,6 +2,7 @@ import genetics
 import evolution
 import settings
 import json
+import sys
 from db_results import ResultsDatabase
 
 import time
@@ -11,16 +12,20 @@ desideratum = int(raw_input('What number should we try for?: '))
 # Customize paramaters, defaulting to settings module
 customize = raw_input('Would you like to customize parameters? [y/N]')
 if any(input in customize for input in ('Y', 'y')):
-    settings.POPULATION_SIZE = int(raw_input('POPULATION_SIZE [100]? ') or settings.POPULATION_SIZE)
-    settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [20]? ') or settings.GENOME_LENGTH)
-    settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [0.7]? ') or settings.CROSSOVER_RATE)
+    settings.POPULATION_SIZE = int(raw_input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
+    settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
+    settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+
+if desideratum > 9**(settings.GENOME_LENGTH / 4):
+    print '\033[91mError:\033[0m This will never work :('
+    sys.exit(1)
 
 # Output settings
 print '\n\033[95mPopulation initialized with the following settings:\033[0m'
 print 'POPULATION_SIZE:', settings.POPULATION_SIZE
 print 'GENOME_LENGTH:', settings.GENOME_LENGTH
 print 'CROSSOVER_RATE:', settings.CROSSOVER_RATE
-print 'GENES:', json.dumps(settings.GENES, indent=2) # Using json.dumps for formatting
+print 'GENES:', json.dumps(settings.GENES, indent=2)  # Using json.dumps for formatting
 
 # Set a flag for which to generate loop
 match_found = False
@@ -43,6 +48,7 @@ while not match_found:
 
         if phenome.expression == desideratum:
 
+            generations += 1
             match_found = True
 
             # Stop timer
