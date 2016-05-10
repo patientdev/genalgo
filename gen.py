@@ -2,11 +2,17 @@ import genetics
 import evolution
 import settings
 import json
+import operator
 from db_results import ResultsDatabase
 
 import time
 
 desiderata = int(raw_input('What number should we try for?: '))
+customize = raw_input('Would you like to customize parameters? [y/N]')
+if any(input in customize for input in ('Y', 'y')):
+    settings.POPULATION_SIZE = int(raw_input('POPULATION_SIZE [100]? ') or settings.POPULATION_SIZE)
+    settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [20]? ') or settings.GENOME_LENGTH)
+    settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [0.7]? ') or settings.CROSSOVER_RATE)
 
 match_found = False
 generations = 0
@@ -27,12 +33,14 @@ while not match_found:
         phenome = genome.phenome
         phenome.fitness = evolution.assignFitness(phenome, desiderata=desiderata)
         if phenome.expression == desiderata:
-            print '\n\033[92m{} = 0 {}\033[0m'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
+
+            duration = round(time.time() - start, 2)
+            print '\n{} Found in \033[4m{:,}\033[0m generations in \033[4m{}\033[0m seconds'.format(u'\u2713'.encode('utf-8'), generations, duration)
+
+            print '\033[92m{} = 0 {}\033[0m'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
 
             print 'Genome sequence: {}'.format(genome.sequence)
 
-            duration = round(time.time() - start, 2)
-            print 'Found in \033[4m{:,}\033[0m generations in \033[4m{}\033[0m seconds'.format(generations, duration)
             match_found = True
 
             results_db = ResultsDatabase()
