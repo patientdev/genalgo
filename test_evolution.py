@@ -10,28 +10,28 @@ class EvolutionTests(unittest.TestCase):
 
     def setUp(self):
         self.genomes = genetics.Population().genomes
-        self.desiderata = 42
+        self.desideratum = 42
 
     def test_assign_fitness_exact(self):
 
         for genome in self.genomes:
-            genome.phenome.expression = self.desiderata
+            genome.phenome.expression = self.desideratum
 
-        assigned_fitnesses = [evolution.assignFitness(genome.phenome, desiderata=self.desiderata) for genome in self.genomes]
+        assigned_fitnesses = [evolution.assignFitness(genome.phenome, desideratum=self.desideratum) for genome in self.genomes]
 
         # Assert that the sum of the assigned_fitnesses is equal to the length of self.genomes since all phenomes have a fitness of 1
         self.assertEqual(sum(assigned_fitnesses), 1 * len(self.genomes))
 
     def test_assign_fitness_inexact(self):
 
-        assigned_fitnesses = [evolution.assignFitness(genome.phenome, desiderata=self.desiderata) for genome in self.genomes]
+        assigned_fitnesses = [evolution.assignFitness(genome.phenome, desideratum=self.desideratum) for genome in self.genomes]
 
         self.assertEqual(len(assigned_fitnesses), len(self.genomes))
 
     def test_roulette(self):
 
         for genome in self.genomes:
-            evolution.assignFitness(genome.phenome, desiderata=self.desiderata)
+            evolution.assignFitness(genome.phenome, desideratum=self.desideratum)
 
         self.assertIsInstance(evolution.roulette(self.genomes), genetics.Genome)
 

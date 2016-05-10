@@ -3,10 +3,10 @@ import settings
 import genetics
 
 
-def assignFitness(phenome, desiderata=0):
+def assignFitness(phenome, desideratum=0):
     '''TO DO'''
     try:
-        phenome.fitness = 1 / abs(desiderata - phenome.expression)
+        phenome.fitness = 1 / abs(desideratum - phenome.expression)
     except ZeroDivisionError:
         phenome.fitness = 1
 

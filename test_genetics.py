@@ -41,10 +41,10 @@ class GenomeTests(unittest.TestCase):
 
     def test_base_edit_zero_divisor(self):
         given = [y for x in range(settings.GENOME_LENGTH) for y in ['/', 0]]
-        desiderata = [y for x in range(settings.GENOME_LENGTH) for y in ['*', 0]]
+        desideratum = [y for x in range(settings.GENOME_LENGTH) for y in ['*', 0]]
         rationalized_rna = self.genome.baseEditZeroDivisorFragments(normalized_rna=given)
 
-        self.assertEqual(rationalized_rna, desiderata)
+        self.assertEqual(rationalized_rna, desideratum)
 
     def test_format_sequence_order(self):
         all_integers = [x for x in range(settings.GENOME_LENGTH)]
