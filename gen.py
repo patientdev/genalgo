@@ -2,7 +2,6 @@ import genetics
 import evolution
 import settings
 import json
-import operator
 from db_results import ResultsDatabase
 
 import time
@@ -35,11 +34,12 @@ while not match_found:
         if phenome.expression == desiderata:
 
             duration = round(time.time() - start, 2)
-            print '\n{} Found in \033[4m{:,}\033[0m generations in \033[4m{}\033[0m seconds'.format(u'\u2713'.encode('utf-8'), generations, duration)
 
-            print '\033[92m{} = 0 {}\033[0m'.format(desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
+            print '\n\033[92m{} Found after {:,} generations over {} seconds\033[0m'.format(u'\u2713'.encode('utf-8'), generations, duration)
 
-            print 'Genome sequence: {}'.format(genome.sequence)
+            print '{} {}'.format(u'\u21B3'.encode('utf-8'), genome.sequence)
+
+            print '{} {} = 0 {}'.format(u'\u21B3'.encode('utf-8'), desiderata, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
 
             match_found = True
 
