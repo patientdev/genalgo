@@ -7,26 +7,26 @@ from db_results import ResultsDatabase
 
 import time
 
-desideratum = int(raw_input('What number should we try for?: '))
+desideratum = int(input('What number should we try for?: '))
 
 # Customize paramaters, defaulting to settings module
-customize = raw_input('Would you like to customize parameters? [y/N]')
+customize = input('Would you like to customize parameters? [y/N]')
 if any(input in customize for input in ('Y', 'y')):
-    settings.POPULATION_SIZE = int(raw_input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
-    settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
-    settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+    settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
+    settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
+    settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
-    print '\033[91mError:\033[0m This will never work :('
+    print('\033[91mError:\033[0m This will never work :(')
     sys.exit(1)
 
 # Output settings
-print '\n\033[95mPopulation initialized with the following settings:\033[0m'
-print 'POPULATION_SIZE:', settings.POPULATION_SIZE
-print 'GENOME_LENGTH:', settings.GENOME_LENGTH
-print 'CROSSOVER_RATE:', settings.CROSSOVER_RATE
-print 'GENES:', json.dumps(settings.GENES, indent=2)  # Using json.dumps for formatting
+print('\n\033[95mPopulation initialized with the following settings:\033[0m')
+print('POPULATION_SIZE:', settings.POPULATION_SIZE)
+print('GENOME_LENGTH:', settings.GENOME_LENGTH)
+print('CROSSOVER_RATE:', settings.CROSSOVER_RATE)
+print('GENES:', json.dumps(settings.GENES, indent=2))  # Using json.dumps for formatting
 
 # Set a flag for which to generate loop
 match_found = False
@@ -40,8 +40,6 @@ population = genetics.Population()
 # Start timer for our primary loop
 start = time.time()
 while not match_found:
-
-    print len(population.genomes)
 
     for genome in population.genomes:
 
@@ -57,11 +55,11 @@ while not match_found:
             duration = round(time.time() - start, 2)
 
             # Print various results
-            print '\n\033[92m{} Found after {:,} generations over {} seconds\033[0m'.format(u'\u2713'.encode('utf-8'), generations, duration)
+            print('\n\033[92m✓ Found after {:,} generations over {} seconds\033[0m'.format(generations, duration))
 
-            print '{} {}'.format(u'\u21B3'.encode('utf-8'), genome.sequence)
+            print('↳ {}'.format(genome.sequence))
 
-            print '{} {} = 0 {}'.format(u'\u21B3'.encode('utf-8'), desideratum, ' '.join(str(codon) for codon in phenome.genome.normalized_rna))
+            print('↳ {} = 0 {}'.format(desideratum, ' '.join(str(codon) for codon in phenome.genome.normalized_rna)))
 
             # Prep results for database
             results_db = ResultsDatabase()

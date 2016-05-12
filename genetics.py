@@ -25,7 +25,7 @@ class Genome(object):
 
     def seedGenome(self, genes={}):
         '''Returns a genome as an (inherently) ordered list of genes of length given by static GENOME_LENGTH variable'''
-        genome = [randomchoice(settings.GENES.keys()) for x in range(settings.GENOME_LENGTH)]
+        genome = [randomchoice(list(settings.GENES)) for x in range(settings.GENOME_LENGTH)]
 
         return genome
 
