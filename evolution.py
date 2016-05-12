@@ -39,3 +39,16 @@ def crossover(offspring_1_genome, offspring_2_genome):
         offspring_2_genome = genetics.Genome(genes=[offspring_2_crossed_sequence[i:i + 4] for i in range(0, settings.GENOME_LENGTH * 4, 4)])
 
     return offspring_1_genome, offspring_2_genome
+
+
+def mutate(genome):
+    '''Loop through genome sequence and flip bits based on the mutation rate'''
+
+    mutated_sequence = []
+
+    for bit in genome.sequence:
+        if random.random() < settings.MUTATION_RATE:
+            mutated_sequence.append('0' if bit == '1' else '1')
+
+    genome.sequence = ''.join(mutated_sequence)
+    return genome

@@ -50,3 +50,25 @@ class EvolutionTests(unittest.TestCase):
         daughter_1, daughter_2 = evolution.crossover(parent_1, parent_2)
 
         self.assertEqual(daughter_1.sequence[settings.GENOME_LENGTH * 2:], parent_2.sequence[settings.GENOME_LENGTH * 2:])
+
+    @mock.patch('random.random')
+    def test_mutation(self, random_call):
+
+        offspring_genome = self.genomes[0]
+        offspring_genome.sequence = '00000001'
+        random_call.return_value = 0.0001
+
+        mutate_genome = evolution.mutate(offspring_genome)
+
+        self.assertEqual(mutate_genome.sequence, '11111110')
+
+    @mock.patch('random.random')
+    def test_no_mutation(self, random_call):
+
+        offspring_genome = self.genomes[0]
+        offspring_genome.sequence = '00000001'
+        random_call.return_value = 0.1
+
+        mutate_genome = evolution.mutate(offspring_genome)
+
+        self.assertEqual(mutate_genome.sequence, offspring_genome.sequence)

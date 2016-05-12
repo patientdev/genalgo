@@ -62,8 +62,11 @@ while not match_found:
 
         t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
 
-        next_population.append(t1)
-        next_population.append(t2)
+        mutated_offspring_1 = evolution.mutate(t1)
+        mutated_offspring_2 = evolution.mutate(t2)
+
+        next_population.append(mutated_offspring_1)
+        next_population.append(mutated_offspring_2)
 
     population = genetics.Population(genomes=next_population)
 
