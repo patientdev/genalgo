@@ -39,6 +39,7 @@ population = genetics.Population()
 
 # Start timer for our primary loop
 start = time.time()
+
 while not match_found:
 
     for genome in population.genomes:
@@ -48,31 +49,7 @@ while not match_found:
 
         if phenome.expression == desideratum:
 
-            generations += 1
             match_found = True
-
-            # Stop timer
-            duration = round(time.time() - start, 2)
-
-            # Print various results
-            print('\n\033[92m✓ Found after {:,} generations over {} seconds\033[0m'.format(generations, duration))
-
-            print('↳ {}'.format(genome.sequence))
-
-            print('↳ {} = 0 {}'.format(desideratum, ' '.join(str(codon) for codon in phenome.genome.normalized_rna)))
-
-            # Prep results for database
-            results_db = ResultsDatabase()
-            results = {
-                'given_number': desideratum,
-                'duration': duration,
-                'successful_sequence': phenome.genome.sequence,
-                'generations': generations
-            }
-
-            # Add results to database
-            results_db.insert_results(results=results)
-
             break
 
     # Produce next population, for next loop iteration
@@ -89,3 +66,30 @@ while not match_found:
         next_population.append(t2)
 
     population = genetics.Population(genomes=next_population)
+
+# We found a match, so print report
+if match_found:
+
+    generations += 1
+
+    # Stop timer
+    duration = round(time.time() - start, 2)
+
+    # Print various results
+    print('\n\033[92m✓ Found after {:,} generations over {} seconds\033[0m'.format(generations, duration))
+
+    print('↳ {}'.format(genome.sequence))
+
+    print('↳ {} = 0 {}'.format(desideratum, ' '.join(str(codon) for codon in phenome.genome.normalized_rna)))
+
+    # Prep results for database
+    results_db = ResultsDatabase()
+    results = {
+        'given_number': desideratum,
+        'duration': duration,
+        'successful_sequence': phenome.genome.sequence,
+        'generations': generations
+    }
+
+    # Add results to database
+    results_db.insert_results(results=results)
