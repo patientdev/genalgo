@@ -16,6 +16,7 @@ if any(input in customize for input in ('Y', 'y')):
     settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
     settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
 
+# Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
     print '\033[91mError:\033[0m This will never work :('
     sys.exit(1)
@@ -33,13 +34,14 @@ match_found = False
 # Init generations counter
 generations = 0
 
-
 # Init first population
 population = genetics.Population()
 
 # Start timer for our primary loop
 start = time.time()
 while not match_found:
+
+    print len(population.genomes)
 
     for genome in population.genomes:
 
@@ -74,19 +76,18 @@ while not match_found:
             results_db.insert_results(results=results)
 
             break
-        else:
-            generations += 1
-            next_population = []
 
-            # print generations, len(population.genomes)
+    # Produce next population, for next loop iteration
+    generations += 1
+    next_population = []
 
-            for genome in population.genomes:
-                offspring_1_genome = evolution.roulette(population.genomes)
-                offspring_2_genome = evolution.roulette(population.genomes)
+    for genome in population.genomes:
+        offspring_1_genome = evolution.roulette(population.genomes)
+        offspring_2_genome = evolution.roulette(population.genomes)
 
-                t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
+        t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
 
-                next_population.append(t1)
-                next_population.append(t2)
+        next_population.append(t1)
+        next_population.append(t2)
 
     population = genetics.Population(genomes=next_population)
