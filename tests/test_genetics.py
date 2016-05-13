@@ -53,7 +53,3 @@ class GenomeTests(unittest.TestCase):
         # Assert that both lists, one of nothing but integers and the other nothing but operators, will be empty and therefore equal (an empty list plus an empty list is...an empty list)
 
         self.assertEqual([], self.genome.formatSequenceOrder(all_operators) + self.genome.formatSequenceOrder(all_integers))
-
-
-if __name__ == '__main__':
-    unittest.main()

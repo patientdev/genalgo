@@ -1,0 +1,13 @@
+[run]
+branch = true
+source = .
+omit = **/__init__.py
+data_file = tests/.coverage
+
+[report]
+show_missing = true
+skip_covered = true
+
+[html]
+title = 'GenAlgo Code Coverage'
+directory = ./log/coverage/
