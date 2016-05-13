@@ -6,9 +6,10 @@ Derived from AI Junkie's [Genetics Algorithms in Plain English](http://www.ai-ju
 
 ## Requirements:
 * Python 2.7
+* Python 3.5.1
 
 ## To run:
-`python gen.py`
+`python3 gen.py`
 
 ## Testing
 `python -m unittest discover`
