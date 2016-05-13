@@ -10,4 +10,4 @@ skip_covered = true
 
 [html]
 title = 'GenAlgo Code Coverage'
-directory = ./log/coverage/
+directory = ./tests/.htmlcoverage
