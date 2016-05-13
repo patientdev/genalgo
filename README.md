@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/patientdev/genalgo.svg?branch=master)](https://travis-ci.org/patientdev/genalgo)
+[![Build Status](https://travis-ci.org/patientdev/genalgo.svg?branch=master)](https://travis-ci.org/patientdev/genalgo) [![Coverage Status](https://coveralls.io/repos/github/patientdev/genalgo/badge.svg?branch=master)](https://coveralls.io/github/patientdev/genalgo?branch=master)
 
 # Genetic algorithm practice
 

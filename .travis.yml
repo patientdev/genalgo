@@ -4,4 +4,4 @@ python:
   - "3.5.1"
 
 # command to run tests
-script: coverage3 -m unittest discover
+script: coverage3 run -m unittest discover
