@@ -48,7 +48,10 @@ def mutate(genome):
 
     for bit in genome.sequence:
         if random.random() < settings.MUTATION_RATE:
-            mutated_sequence.append('0' if bit == '1' else '1')
+            mutated_bit = '0' if bit == '1' else '1'
+            mutated_sequence.append(mutated_bit)
+        else:
+            mutated_sequence.append(bit)
 
     genome.sequence = ''.join(mutated_sequence)
     return genome

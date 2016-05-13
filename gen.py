@@ -52,28 +52,27 @@ while not match_found:
             match_found = True
             break
 
-    # Produce next population, for next loop iteration
-    generations += 1
-    next_population = []
+    if not match_found:
+        # Produce next population, for next loop iteration
+        generations += 1
+        next_population = []
 
-    for genome in population.genomes:
-        offspring_1_genome = evolution.roulette(population.genomes)
-        offspring_2_genome = evolution.roulette(population.genomes)
+        for genome in population.genomes:
+            offspring_1_genome = evolution.roulette(population.genomes)
+            offspring_2_genome = evolution.roulette(population.genomes)
 
-        t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
+            t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
 
-        mutated_offspring_1 = evolution.mutate(t1)
-        mutated_offspring_2 = evolution.mutate(t2)
+            mutated_offspring_1 = evolution.mutate(t1)
+            mutated_offspring_2 = evolution.mutate(t2)
 
-        next_population.append(mutated_offspring_1)
-        next_population.append(mutated_offspring_2)
+            next_population.append(mutated_offspring_1)
+            next_population.append(mutated_offspring_2)
 
-    population = genetics.Population(genomes=next_population)
+        population = genetics.Population(genomes=next_population)
 
 # We found a match, so print report
 if match_found:
-
-    generations += 1
 
     # Stop timer
     duration = round(time.time() - start, 2)
