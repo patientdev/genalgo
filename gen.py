@@ -15,6 +15,7 @@ if any(input in customize for input in ('Y', 'y')):
     settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
     settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
     settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+    settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
@@ -26,6 +27,7 @@ print('\n\033[95mPopulation initialized with the following settings:\033[0m')
 print('POPULATION_SIZE:', settings.POPULATION_SIZE)
 print('GENOME_LENGTH:', settings.GENOME_LENGTH)
 print('CROSSOVER_RATE:', settings.CROSSOVER_RATE)
+print('MUTATION_RATE:', settings.MUTATION_RATE)
 print('GENES:', json.dumps(settings.GENES, indent=2))  # Using json.dumps for formatting
 
 # Set a flag for which to generate loop
@@ -58,8 +60,8 @@ while not match_found:
         next_population = []
 
         for genome in population.genomes:
-            offspring_1_genome = evolution.roulette(population.genomes)
-            offspring_2_genome = evolution.roulette(population.genomes)
+            offspring_1_genome = evolution.roulette(population)
+            offspring_2_genome = evolution.roulette(population)
 
             t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
 

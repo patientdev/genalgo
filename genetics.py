@@ -10,6 +10,8 @@ class Population(object):
         else:
             self.genomes = genomes
 
+        self.total_fitness = sum([genome.phenome.fitness for genome in self.genomes])
+
 
 class Genome(object):
 
