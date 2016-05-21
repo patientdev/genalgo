@@ -9,7 +9,8 @@ import mock
 class EvolutionTests(unittest.TestCase):
 
     def setUp(self):
-        self.genomes = genetics.Population().genomes
+        self.population = genetics.Population()
+        self.genomes = self.population.genomes
         self.desideratum = 42
 
     def test_assign_fitness_exact(self):
@@ -33,7 +34,7 @@ class EvolutionTests(unittest.TestCase):
         for genome in self.genomes:
             evolution.assignFitness(genome.phenome, desideratum=self.desideratum)
 
-        self.assertIsInstance(evolution.roulette(self.genomes), genetics.Genome)
+        self.assertIsInstance(evolution.roulette(self.population), genetics.Genome)
 
     @mock.patch('random.random')
     @mock.patch('random.randint')
