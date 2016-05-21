@@ -15,6 +15,7 @@ if any(input in customize for input in ('Y', 'y')):
     settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
     settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
     settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+    settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
@@ -26,6 +27,7 @@ print('\n\033[95mPopulation initialized with the following settings:\033[0m')
 print('POPULATION_SIZE:', settings.POPULATION_SIZE)
 print('GENOME_LENGTH:', settings.GENOME_LENGTH)
 print('CROSSOVER_RATE:', settings.CROSSOVER_RATE)
+print('MUTATION_RATE:', settings.MUTATION_RATE)
 print('GENES:', json.dumps(settings.GENES, indent=2))  # Using json.dumps for formatting
 
 # Set a flag for which to generate loop
@@ -40,35 +42,45 @@ population = genetics.Population()
 # Start timer for our primary loop
 start = time.time()
 
+print("\n\033[36m==Status==\033[0m")
 while not match_found:
+
+    print("Generation: {}, Population size: {}".format(generations, len(population.genomes)))
 
     for genome in population.genomes:
 
         phenome = genome.phenome
         phenome.fitness = evolution.assignFitness(phenome, desideratum=desideratum)
 
+        # We found a match, so break the loop
         if phenome.expression == desideratum:
-
             match_found = True
             break
 
     if not match_found:
+
         # Produce next population, for next loop iteration
         generations += 1
         next_population = []
 
         for genome in population.genomes:
-            offspring_1_genome = evolution.roulette(population.genomes)
-            offspring_2_genome = evolution.roulette(population.genomes)
 
+            # Fitness proportionate selection (aka roulette wheel selection)
+            offspring_1_genome = evolution.roulette(population)
+            offspring_2_genome = evolution.roulette(population)
+
+            # Chromosomal crossover
             t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)
 
+            # Bit mutation
             mutated_offspring_1 = evolution.mutate(t1)
             mutated_offspring_2 = evolution.mutate(t2)
 
+            # Add evolved children to next population
             next_population.append(mutated_offspring_1)
             next_population.append(mutated_offspring_2)
 
+        # Init new population
         population = genetics.Population(genomes=next_population)
 
 # We found a match, so print report

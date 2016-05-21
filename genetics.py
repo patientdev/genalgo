@@ -10,6 +10,8 @@ class Population(object):
         else:
             self.genomes = genomes
 
+        self.total_fitness = sum([genome.phenome.fitness for genome in self.genomes])
+
 
 class Genome(object):
 
@@ -61,7 +63,7 @@ class Genome(object):
         for codon in mRNA:
             # Looking for an operator
             if need_operator:
-                if not isinstance(codon, int):
+                if codon is not None and not isinstance(codon, int):
                     need_operator = False
                     normalized_rna.append(codon)
 
@@ -71,6 +73,7 @@ class Genome(object):
                     need_operator = True
                     normalized_rna.append(codon)
 
+        # Remove trailing operators
         try:
             if not isinstance(normalized_rna[-1], int):
                 del normalized_rna[-1]
@@ -105,19 +108,19 @@ class Phenome(object):
                 except:
                     pass
 
-            if trait == '-':
+            elif trait == '-':
                 try:
                     expression -= normalized_rna[index + 1]
                 except:
                     pass
 
-            if trait == '*':
+            elif trait == '*':
                 try:
                     expression *= normalized_rna[index + 1]
                 except:
                     pass
 
-            if trait == '/':
+            elif trait == '/':
                 try:
                     expression /= normalized_rna[index + 1]
                 except:

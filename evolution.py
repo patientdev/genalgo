@@ -5,6 +5,7 @@ import genetics
 
 def assignFitness(phenome, desideratum=0):
     '''TO DO'''
+
     try:
         phenome.fitness = 1 / abs(desideratum - phenome.expression)
     except ZeroDivisionError:
@@ -13,14 +14,15 @@ def assignFitness(phenome, desideratum=0):
     return phenome.fitness
 
 
-def roulette(genomes):
-    '''Pick a random number and return the phenome with the associated proportional fitness'''
+def roulette(population):
+    '''Pick a random number and return the phenome with the associated proportional fitness
+    See: https://en.wikipedia.org/wiki/Fitness_proportionate_selection'''
 
-    total_fitness = sum([genome.phenome.fitness for genome in genomes])
+    total_fitness = population.total_fitness
     stochastic_variable = random.uniform(0, total_fitness)
     current = 0
 
-    for genome in genomes:
+    for genome in population.genomes:
         current += genome.phenome.fitness
         if current > stochastic_variable:
             return genome
@@ -54,4 +56,5 @@ def mutate(genome):
             mutated_sequence.append(bit)
 
     genome.sequence = ''.join(mutated_sequence)
+
     return genome
