@@ -42,7 +42,10 @@ population = genetics.Population()
 # Start timer for our primary loop
 start = time.time()
 
+print("\n\033[94m==Status==\033[0m")
 while not match_found:
+
+    print("Generation: {}, Population size: {}".format(generations, len(population.genomes)))
 
     for genome in population.genomes:
 
