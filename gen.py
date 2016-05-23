@@ -7,15 +7,15 @@ from db_results import ResultsDatabase
 
 import time
 
-desideratum = int(input('What number should we try for?: '))
+desideratum = int(raw_input('What number should we try for?: '))
 
 # Customize paramaters, defaulting to settings module
-customize = input('Would you like to customize parameters? [y/N]')
+customize = raw_input('Would you like to customize parameters? [y/N]')
 if any(input in customize for input in ('Y', 'y')):
-    settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
-    settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
-    settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
-    settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
+    settings.POPULATION_SIZE = int(raw_input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
+    settings.GENOME_LENGTH = int(raw_input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
+    settings.CROSSOVER_RATE = float(raw_input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+    settings.MUTATION_RATE = float(raw_input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
