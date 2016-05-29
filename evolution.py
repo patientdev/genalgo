@@ -28,6 +28,17 @@ def roulette(population):
             return genome
 
 
+def stochastic_acceptance_roulette(population):
+    '''http://arxiv.org/abs/1109.3627'''
+
+    while True:
+        random_genome = random.choice(population.genomes)
+        if random.uniform(0, population.max_fitness) < random_genome.phenome.fitness / population.max_fitness:
+            return random_genome
+        else:
+            continue
+
+
 def crossover(offspring_1_genome, offspring_2_genome):
 
     if random.random() < settings.CROSSOVER_RATE:

@@ -73,3 +73,13 @@ class EvolutionTests(unittest.TestCase):
         mutate_genome = evolution.mutate(offspring_genome)
 
         self.assertEqual(mutate_genome.sequence, offspring_genome.sequence)
+
+
+    def test_stochastic_acceptance_roulette(self):
+
+        for genome in self.population.genomes:
+            evolution.assignFitness(genome.phenome, desideratum=self.desideratum)
+
+        self.population.max_fitness = sum([genome.phenome.fitness for genome in self.population.genomes])
+
+        print(evolution.stochastic_acceptance_roulette(self.population))

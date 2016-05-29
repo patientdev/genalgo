@@ -11,6 +11,8 @@ class Population(object):
             self.genomes = genomes
 
         self.total_fitness = sum([genome.phenome.fitness for genome in self.genomes])
+        self.max_fitness = max([genome.phenome.fitness for genome in self.genomes])
+
 
 
 class Genome(object):
