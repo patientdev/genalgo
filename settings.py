@@ -1,5 +1,3 @@
-from evolution import stochastic_acceptance_roulette
-
 POPULATION_SIZE = 100
 GENOME_LENGTH = 20
 GENES = {
@@ -21,4 +19,3 @@ GENES = {
 
 CROSSOVER_RATE = 0.7
 MUTATION_RATE = 0.001
-ROULETTE_METHOD = stochastic_acceptance_roulette

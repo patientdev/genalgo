@@ -21,11 +21,11 @@ if any(input in customize for input in ('Y', 'y')):
     settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
     settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
     settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
-    roulette_method = input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') or settings.ROULETTE_METHOD
+    roulette_method = input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') or evolution.stochastic_acceptance_roulette
     if roulette_method == '1':
-        pass
+        evolution.stochastic_acceptance_roulette
     elif roulette_method == '2':
-        settings.ROULETTE_METHOD = evolution.roulette
+        evolution.roulette
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
