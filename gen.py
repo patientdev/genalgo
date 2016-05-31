@@ -7,7 +7,12 @@ from db_results import ResultsDatabase
 
 import time
 
-desideratum = int(input('What number should we try for?: '))
+while True:
+    try:
+        desideratum = int(input('What number should we try for?: '))
+        break
+    except ValueError:
+        print('Input an integer')
 
 # Customize paramaters, defaulting to settings module
 customize = input('Would you like to customize parameters? [y/N]')
@@ -34,7 +39,7 @@ print('GENES:', json.dumps(settings.GENES, indent=2))  # Using json.dumps for fo
 match_found = False
 
 # Init generations counter
-generations = 0
+generations = 1
 
 # Init first population
 population = genetics.Population()
