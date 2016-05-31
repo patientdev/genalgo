@@ -37,7 +37,11 @@ class GenomeTests(unittest.TestCase):
 
     def test_translate_codon(self):
         for codon in self.genome.genes:
-            self.assertEqual(self.genome.translateCodon(codon), settings.GENES[codon])
+            self.assertEqual(self.genome.translateCodon(codon=codon), settings.GENES[codon])
+
+    def test_translate_codon_keyerror(self):
+        self.genome.genes[0] = '1111'
+        self.assertIsNone(self.genome.translateCodon(codon=self.genome.genes[0]))
 
     def test_base_edit_zero_divisor(self):
         given = [y for x in range(settings.GENOME_LENGTH) for y in ['/', 0]]

@@ -14,7 +14,6 @@ class Population(object):
         self.max_fitness = max([genome.phenome.fitness for genome in self.genomes])
 
 
-
 class Genome(object):
 
     def __init__(self, genes=[]):
