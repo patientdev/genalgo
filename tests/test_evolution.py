@@ -74,12 +74,13 @@ class EvolutionTests(unittest.TestCase):
 
         self.assertEqual(mutate_genome.sequence, offspring_genome.sequence)
 
-
     def test_stochastic_acceptance_roulette(self):
+        '''Test that an instance of the genetics.Genome class is returned'''
 
         for genome in self.population.genomes:
             evolution.assignFitness(genome.phenome, desideratum=self.desideratum)
 
         self.population.max_fitness = sum([genome.phenome.fitness for genome in self.population.genomes])
 
-        print(evolution.stochastic_acceptance_roulette(self.population))
+        returned_genome = evolution.stochastic_acceptance_roulette(self.population)
+        self.assertIsInstance(returned_genome, genetics.Genome)
