@@ -1,6 +1,6 @@
 import unittest
-from genetics import *
-from evolution import *
+import genetics
+import evolution
 import settings
 import random
 
@@ -8,7 +8,7 @@ import random
 class PopulationTests(unittest.TestCase):
 
     def setUp(self):
-        self.population = Population()
+        self.population = genetics.Population()
 
     def tearDown(self):
         del self.population
@@ -23,7 +23,7 @@ class PopulationTests(unittest.TestCase):
 class GenomeTests(unittest.TestCase):
 
     def setUp(self):
-        self.genome = Genome()
+        self.genome = genetics.Genome()
 
     def test_genome_init(self):
         self.assertIsInstance(self.genome, object)
