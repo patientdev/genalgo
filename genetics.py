@@ -104,27 +104,15 @@ class Phenome(object):
         for index, trait in enumerate(normalized_rna):
 
             if trait == '+':
-                try:
-                    expression += normalized_rna[index + 1]
-                except:
-                    pass
+                expression += normalized_rna[index + 1]
 
             elif trait == '-':
-                try:
-                    expression -= normalized_rna[index + 1]
-                except:
-                    pass
+                expression -= normalized_rna[index + 1]
 
             elif trait == '*':
-                try:
-                    expression *= normalized_rna[index + 1]
-                except:
-                    pass
+                expression *= normalized_rna[index + 1]
 
             elif trait == '/':
-                try:
-                    expression /= normalized_rna[index + 1]
-                except:
-                    pass
+                expression /= normalized_rna[index + 1]
 
         return expression
