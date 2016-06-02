@@ -21,11 +21,7 @@ if any(input in customize for input in ('Y', 'y')):
     settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
     settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
     settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
-    roulette_method = input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') or evolution.stochastic_acceptance_roulette
-    if roulette_method == '1':
-        evolution.stochastic_acceptance_roulette
-    elif roulette_method == '2':
-        evolution.roulette
+    settings.ROULETTE_METHOD = 'roulette' if input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') == '2' else 'stochastic_acceptance_roulette'
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
@@ -39,7 +35,7 @@ print('GENOME_LENGTH:', settings.GENOME_LENGTH)
 print('CROSSOVER_RATE:', settings.CROSSOVER_RATE)
 print('MUTATION_RATE:', settings.MUTATION_RATE)
 print('GENES:', json.dumps(settings.GENES, indent=2))  # Using json.dumps for formatting
-print('ROULETTE_METHOD:', 'Stochastic O(1)' if settings.ROULETTE_METHOD.__name__ == 'stochastic_acceptance_roulette' else 'Linear O(n)')
+print('ROULETTE_METHOD:', 'Stochastic O(1)' if settings.ROULETTE_METHOD == 'stochastic_acceptance_roulette' else 'Linear O(n)')
 
 # Set a flag for which to generate loop
 match_found = False
@@ -78,8 +74,8 @@ while not match_found:
         for genome in population.genomes:
 
             # Fitness proportionate selection (aka roulette wheel selection)
-            offspring_1_genome = settings.ROULETTE_METHOD(population)
-            offspring_2_genome = settings.ROULETTE_METHOD(population)
+            offspring_1_genome = getattr(evolution, settings.ROULETTE_METHOD)(population)
+            offspring_2_genome = getattr(evolution, settings.ROULETTE_METHOD)(population)
 
             # Chromosomal crossover
             t1, t2 = evolution.crossover(offspring_1_genome, offspring_2_genome)

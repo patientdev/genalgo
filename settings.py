@@ -19,3 +19,4 @@ GENES = {
 
 CROSSOVER_RATE = 0.7
 MUTATION_RATE = 0.001
+ROULETTE_METHOD = 'stochastic_acceptance_roulette'
