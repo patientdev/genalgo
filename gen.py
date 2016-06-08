@@ -104,14 +104,17 @@ if match_found:
 
     print('↳ {} = 0 {}'.format(desideratum, ' '.join(str(codon) for codon in phenome.genome.normalized_rna)))
 
-    # Prep results for database
-    results_db = ResultsDatabase()
-    results = {
-        'given_number': desideratum,
-        'duration': duration,
-        'successful_sequence': phenome.genome.sequence,
-        'generations': generations
-    }
+    # Save run in database
+    with ResultsDatabase() as results_db:
+        # Prep results for database
+        results_db = ResultsDatabase()
+        results = {
+            'given_number': desideratum,
+            'duration': duration,
+            'successful_sequence': phenome.genome.sequence,
+            'generations': generations,
+            'roulette_method': settings.ROULETTE_METHOD
+        }
 
-    # Add results to database
-    results_db.insert_results(results=results)
+        # Add results to database
+        results_db.insert_results(results=results)
