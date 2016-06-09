@@ -4,6 +4,7 @@ import settings
 import json
 import sys
 from db_results import ResultsDatabase
+from subprocess import call
 
 import time
 
@@ -118,3 +119,5 @@ if match_found:
 
         # Add results to database
         results_db.insert_results(results=results)
+
+    call('python3 plot.py', shell=True)

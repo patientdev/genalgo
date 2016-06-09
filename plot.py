@@ -20,8 +20,6 @@ for r in generations:
         gens_collection[desideratum] = [r[1]]
 
 variance = [numpy.var(gens_collection[desideratum]) for desideratum in gens_collection]
-print([result[0] for result in generation_averages])
-print(["{}: {}".format(desideratum, numpy.var(gens_collection[desideratum])) for desideratum in gens_collection])
 
 ind = numpy.arange(len(generation_averages))
 width = 0.8
