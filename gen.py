@@ -8,21 +8,26 @@ from subprocess import call
 
 import time
 
-while True:
-    try:
-        desideratum = int(input('What number should we try for?: '))
-        break
-    except ValueError:
-        print('Input an integer')
+try:
+    # Receive desideratum if given
+    desideratum = int(sys.argv[1])
+except IndexError:
+    # No arguments were given, so ask for the desideratum
+    while True:
+        try:
+            desideratum = int(input('What number should we try for?: '))
+            break
+        except ValueError:
+            print('Input an integer')
 
-# Customize paramaters, defaulting to settings module
-customize = input('Would you like to customize parameters? [y/N]')
-if any(input in customize for input in ('Y', 'y')):
-    settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
-    settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
-    settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
-    settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
-    settings.ROULETTE_METHOD = 'roulette' if input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') == '2' else 'stochastic_acceptance_roulette'
+    # Customize paramaters, defaulting to settings module
+    customize = input('Would you like to customize parameters? [y/N]')
+    if any(input in customize for input in ('Y', 'y')):
+        settings.POPULATION_SIZE = int(input('POPULATION_SIZE [{}]? '.format(settings.POPULATION_SIZE)) or settings.POPULATION_SIZE)
+        settings.GENOME_LENGTH = int(input('GENOME_LENGTH [{}]? '.format(settings.GENOME_LENGTH)) or settings.GENOME_LENGTH)
+        settings.CROSSOVER_RATE = float(input('CROSSOVER_RATE [{}]? '.format(settings.CROSSOVER_RATE)) or settings.CROSSOVER_RATE)
+        settings.MUTATION_RATE = float(input('MUTATION_RATE [{}]? '.format(settings.MUTATION_RATE)) or settings.MUTATION_RATE)
+        settings.ROULETTE_METHOD = 'roulette' if input('[1] Stochastic O(1)  // default\n[2] Linear O(n)\n') == '2' else 'stochastic_acceptance_roulette'
 
 # Halt program if desideratum exceeds highest possible result
 if desideratum > 9**(settings.GENOME_LENGTH / 4):
@@ -31,6 +36,7 @@ if desideratum > 9**(settings.GENOME_LENGTH / 4):
 
 # Output settings
 print('\n\033[95mPopulation initialized with the following settings:\033[0m')
+print('Desideratum:', desideratum)
 print('POPULATION_SIZE:', settings.POPULATION_SIZE)
 print('GENOME_LENGTH:', settings.GENOME_LENGTH)
 print('CROSSOVER_RATE:', settings.CROSSOVER_RATE)
