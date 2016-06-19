@@ -20,9 +20,10 @@ class PopulationTests(unittest.TestCase):
         self.assertEqual(settings.POPULATION_SIZE, len(self.population.genomes))
 
     def test_population_genomes_parameter(self):
-        self.population = genetics.Population(genomes=[genetics.Genome() for i in range(100)])
+        self.population = genetics.Population(genomes=[genetics.Genome() for i in range(1)])
 
-        self.assertEqual(len(self.population.genomes), 100)
+        for genome in self.population.genomes:
+            self.assertIsInstance(genome, genetics.Genome)
 
 
 class GenomeTests(unittest.TestCase):
