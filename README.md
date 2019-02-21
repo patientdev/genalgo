@@ -15,4 +15,4 @@ Derived from AI Junkie's [Genetics Algorithms in Plain English](http://www.ai-ju
 `python -m unittest discover`
 
 ## Contributing
-Please see the [Issues](https://github.com/patientdev/genalgo/issues) for needed/wanted changes
+Please see the [Issues](https://github.com/shanecav84/genalgo/issues) for needed/wanted changes
